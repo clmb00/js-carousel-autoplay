@@ -7,7 +7,8 @@ const imgList = [
 ];
 let counter = 0;
 let thumb = "";
-const timeAutoplay = 2000;
+let cicle;
+const timeAutoplay = 1000;
 
 for( i=0 ; i < imgList.length ; i++){
   if(i){
@@ -18,15 +19,25 @@ for( i=0 ; i < imgList.length ; i++){
   document.getElementById('aside_bar').innerHTML += thumb;
 };
 
+autoplay();
+
 const thumbElements = document.getElementsByClassName('thumb');
 
 document.getElementById("up").addEventListener('click', changeImageUp);
 
 document.getElementById("down").addEventListener('click', changeImageDown);
 
-setInterval(function(){
-  changeImageDown();
-}, timeAutoplay)
+const stopAutoplay = () => clearInterval(cicle);
+
+document.querySelector('.container').addEventListener('mouseover', stopAutoplay);
+
+document.querySelector('.container').addEventListener('mouseout', autoplay);
+
+function autoplay(){
+  cicle = setInterval(function(){
+    changeImageDown();
+  }, timeAutoplay);
+}
 
 function changeImageDown(){
   thumbElements[counter].classList.replace('active', 'black_op');
