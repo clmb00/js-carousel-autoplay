@@ -7,6 +7,7 @@ const imgList = [
 ];
 let counter = 0;
 let thumb = "";
+const timeAutoplay = 2000;
 
 for( i=0 ; i < imgList.length ; i++){
   if(i){
@@ -19,17 +20,15 @@ for( i=0 ; i < imgList.length ; i++){
 
 const thumbElements = document.getElementsByClassName('thumb');
 
-document.getElementById("up").addEventListener('click', function(){
-  thumbElements[counter].classList.replace('active', 'black_op');
-  counter --;
-  if (counter<0){
-    counter = imgList.length - 1;
-  };
-  thumbElements[counter].classList.replace('black_op', 'active');
-  document.querySelector('#main_img img').src = "../img/" + imgList[counter];
-});
+document.getElementById("up").addEventListener('click', changeImageUp);
 
-document.getElementById("down").addEventListener('click', function(){
+document.getElementById("down").addEventListener('click', changeImageDown);
+
+setInterval(function(){
+  changeImageDown();
+}, timeAutoplay)
+
+function changeImageDown(){
   thumbElements[counter].classList.replace('active', 'black_op');
   counter ++;
   if (counter>imgList.length - 1){
@@ -37,5 +36,15 @@ document.getElementById("down").addEventListener('click', function(){
   };
   thumbElements[counter].classList.replace('black_op', 'active');
   document.querySelector('#main_img img').src = "../img/" + imgList[counter];
-});
+}
+
+function changeImageUp(){
+  thumbElements[counter].classList.replace('active', 'black_op');
+  counter --;
+  if (counter<0){
+    counter = imgList.length - 1;
+  };
+  thumbElements[counter].classList.replace('black_op', 'active');
+  document.querySelector('#main_img img').src = "../img/" + imgList[counter];
+}
 
